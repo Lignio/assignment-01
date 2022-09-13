@@ -18,14 +18,33 @@ public static class RegExpr
         foreach(string s in resolutions){
             var match = Regex.Match(s, pattern);
             if(match.Success){
-                 Console.WriteLine((int.Parse(match.Groups["width"].Value), int.Parse(match.Groups["height"].Value)));
+                 // Console.WriteLine((int.Parse(match.Groups["width"].Value), int.Parse(match.Groups["height"].Value)));
                  yield return (int.Parse(match.Groups["width"].Value), int.Parse(match.Groups["height"].Value));
             }
                
             }
            }
 
-    public static IEnumerable<string> InnerText(string html, string tag) => throw new NotImplementedException();
+    public static IEnumerable<string> InnerText(string html, string tag) {
 
-    public static IEnumerable<(Uri url, string title)> Urls(string html) => throw new NotImplementedException();
+        // $"<({ tag }).*?>(.*?)</(\1)>"
+        
+        var tagInnerPattern = $"<({ tag }).*?>(?<inner>.*?)</(\\1)>";
+        foreach (Match m in Regex.Matches(html, tagInnerPattern)) {
+            yield return Regex.Replace(m.Groups["inner"].Value, "<.*?>", "");
+        }
+    }
+
+    public static IEnumerable<(Uri url, string title)> Urls(string html) {
+
+        var urlAndTitlePattern = @"<a *((title=[""'](?<title>[^""']*)[""'] *)|([^= ]*=[""'][^""']*[""'] *))* *(href=[""'](?<url>[^""']*)[""']) *((title=[""'](?<title>[^""']*)[""'] *)|([^= ]*=[""'][^""']*[""'] *))* *>(?<inner>.*?)</a>"; 
+        foreach (Match m in Regex.Matches(html, urlAndTitlePattern)) {
+            if (m.Groups["title"].Value != "") {
+                yield return (new Uri(m.Groups["url"].Value), m.Groups["title"].Value);
+            } else {
+                yield return (new Uri(m.Groups["url"].Value), m.Groups["inner"].Value);
+            }
+        }
+
+    }
 }
