@@ -45,7 +45,6 @@ public class RegExprTests
 
         //Assert
         innerText.Should().BeEquivalentTo(new [] {"theoretical computer science", "formal language", "characters", "pattern", "string searching algorithms", "strings"});
-        // Assert.Equal(new [] {"theoretical computer science", "formal language", "characters", "pattern", "string searching algorithms", "strings"}, innerText);
     }
 
     [Fact]
@@ -60,7 +59,6 @@ public class RegExprTests
 
         //Assert
         innerText.Should().BeEquivalentTo(new [] {"The phrase regular expressions (and consequently, regexes) is often used to mean the specific, standard textual syntax for representing patterns that matching text need to conform to."});
-        // Assert.Equal(new [] {"theoretical computer science", "formal language", "characters", "pattern", "string searching algorithms", "strings"}, innerText);
     }
 
     [Fact]
