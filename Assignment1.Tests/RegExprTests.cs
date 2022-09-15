@@ -6,7 +6,7 @@ namespace Assignment1.Tests;
 public class RegExprTests
 {
      [Fact]
-    public void TestSplitLine()
+    public void SplitLineMethod_3StringsTo10Strings()
     {
         //Assign
         string[] test = {"text test string", "animal dog cat", "math 22+23-result"};
@@ -19,7 +19,7 @@ public class RegExprTests
     }
 
     [Fact]
-    public void TestResolutions()
+    public void ResolutionsMethod_ResolutionsOfFormat_NUMBERxNUMBER()
     {
         //Assign
         string[] test = {"1920x1080", "720x1080", "4000x2000", "100000x3"};
@@ -34,7 +34,7 @@ public class RegExprTests
     }
 
     [Fact]
-    public void InnerTextOfLinks()
+    public void InnerTextMethod_InnerTextOfLinks()
     {
         //Assign
         string html = "<div> <p>A <b>regular expression</b>, <b>regex</b> or <b>regexp</b> (sometimes called a <b>rational expression</b>) is, in <a href='https://en.wikipedia.org/wiki/Theoretical_computer_science' title='Theoretical computer science'>theoretical computer science</a> and <a href='https://en.wikipedia.org/wiki/Formal_language' title='Formal language'>formal language</a> theory, a sequence of <a href='https://en.wikipedia.org/wiki/Character_(computing)' title='Character (computing)'>characters</a> that define a <i>search <a href='https://en.wikipedia.org/wiki/Pattern_matching' title='Pattern matching'>pattern</a></i>. Usually this pattern is then used by <a href='https://en.wikipedia.org/wiki/String_searching_algorithm' title='String searching algorithm'>string searching algorithms</a> for 'find' or 'find and replace' operations on <a href='https://en.wikipedia.org/wiki/String_(computer_science)' title='String (computer science)'>strings</a>.</p></div>";
@@ -45,11 +45,24 @@ public class RegExprTests
 
         //Assert
         innerText.Should().BeEquivalentTo(new [] {"theoretical computer science", "formal language", "characters", "pattern", "string searching algorithms", "strings"});
-        // Assert.Equal(new [] {"theoretical computer science", "formal language", "characters", "pattern", "string searching algorithms", "strings"}, innerText);
     }
 
     [Fact]
-    public void ReturnsUrlsWithTitles() {
+    public void InnerTextMethod_InnerTextOfParagraph_SingleElementInArray()
+    {
+        //Assign
+        string html = "<div><p>The phrase <i>regular expressions</i> (and consequently, regexes) is often used to mean the specific, standard textual syntax for representing <u>patterns</u> that matching <em>text</em> need to conform to.</p></div>";
+        string tag = "p";
+
+        //Act
+        var innerText = RegExpr.InnerText(html, tag);
+
+        //Assert
+        innerText.Should().BeEquivalentTo(new [] {"The phrase regular expressions (and consequently, regexes) is often used to mean the specific, standard textual syntax for representing patterns that matching text need to conform to."});
+    }
+
+    [Fact]
+    public void UrlsMethod_ReturnsUrlsWithTitles() {
 
         // Assign
         string html = "<div> <p>A <b>regular expression</b>, <b>regex</b> or <b>regexp</b> (sometimes called a <b>rational expression</b>) is, in <a href='https://en.wikipedia.org/wiki/Theoretical_computer_science' title='Theoretical computer science'>theoretical computer science</a> and <a href='https://en.wikipedia.org/wiki/Formal_language' title='Formal language'>formal language</a> theory, a sequence of <a href='https://en.wikipedia.org/wiki/Character_(computing)' title='Character (computing)'>characters</a> that define a <i>search <a href='https://en.wikipedia.org/wiki/Pattern_matching' title='Pattern matching'>pattern</a></i>. Usually this pattern is then used by <a href='https://en.wikipedia.org/wiki/String_searching_algorithm' title='String searching algorithm'>string searching algorithms</a> for 'find' or 'find and replace' operations on <a href='https://en.wikipedia.org/wiki/String_(computer_science)' title='String (computer science)'>strings</a>.</p></div>";
@@ -63,7 +76,7 @@ public class RegExprTests
     }
 
     [Fact]
-    public void ReturnsUrlsWithTitlesLastLinkNoTitle() {
+    public void UrlsMethod_ReturnsUrlsWithTitlesLastLinkNoTitle() {
 
         // Assign
         string html = "<div> <p>A <b>regular expression</b>, <b>regex</b> or <b>regexp</b> (sometimes called a <b>rational expression</b>) is, in <a href='https://en.wikipedia.org/wiki/Theoretical_computer_science' abc='jaba' title='Theoretical computer science'>theoretical computer science</a> and <a href='https://en.wikipedia.org/wiki/Formal_language' title='Formal language'>formal language</a> theory, a sequence of <a href='https://en.wikipedia.org/wiki/Character_(computing)' title='Character (computing)'>characters</a> that define a <i>search <a href='https://en.wikipedia.org/wiki/Pattern_matching' title='Pattern matching'>pattern</a></i>. Usually this pattern is then used by <a title='String searching algorithm' href='https://en.wikipedia.org/wiki/String_searching_algorithm'>string searching algorithms</a> for 'find' or 'find and replace' operations on <a href='https://en.wikipedia.org/wiki/String_(computer_science)'>strings</a>.</p></div>";
